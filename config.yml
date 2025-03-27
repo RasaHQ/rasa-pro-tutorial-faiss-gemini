@@ -1,0 +1,24 @@
+recipe: default.v1
+language: en
+pipeline:
+- name: SingleStepLLMCommandGenerator
+  llm:
+    model_group: rasa_command_generation_model
+  flow_retrieval:
+    active: false
+
+policies:
+- name: FlowPolicy
+- name: EnterpriseSearchPolicy
+  vector_store:
+    type: faiss
+    source: docs
+  llm:
+    model_group: gemini_flash_model
+  embedding:
+    model_group: gemini_embeddings
+  prompt: prompts/enterprise-search-policy-template.jinja2
+  citation_enabled: true
+  max_history: 3
+  max_messages_in_query: 3
+assistant_id: 20250327-170550-nullary-clutch
